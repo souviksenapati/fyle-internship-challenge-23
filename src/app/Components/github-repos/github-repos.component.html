@@ -1,0 +1,21 @@
+<div *ngIf="githubRepos" class="card mt-3">
+  <div class="card border border-primary-20">
+    <div class="card-body border border-primary">
+      <ul class="list-group border border-success">
+        <li *ngFor="let repo of githubRepos" class="list-group-item justify-content-between border border-secondary">
+          <a [href]="repo.html_url" class="text-primary" target="_blank">
+            <p class="fs-5 fw-bold mb-0">{{ repo.name }}</p>
+          </a>
+
+          <div class="card mt-2">
+            <span class="card-text text-wrap">{{ repo.description || 'No description provided' }}</span>
+          </div>
+
+          <a [href]="repo.languages_url" class="text-primary" target="_blank">
+            <p class="fw-bold mt-3">Languages Used</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

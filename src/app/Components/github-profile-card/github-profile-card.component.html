@@ -1,0 +1,10 @@
+<div class="card card-sm">
+  <img [src]="githubProfile.avatar_url" alt="" class="img-fluid rounded-circle" />
+
+  <div class="card-body border-0 d-flex flex-column align-items-center ">
+    <h4 class="card-title" style="color: #000000;">{{githubProfile.name}}</h4>
+    <p class="card-text text-wrap">{{githubProfile.bio}}</p>
+    <a [href]="githubProfile.html_url" target="_blank" class="text-success text-decoration-none">{{githubProfile.html_url}}</a>
+  </div>
+</div>
+

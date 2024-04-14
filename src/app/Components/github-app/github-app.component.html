@@ -1,0 +1,79 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col">
+      <div class="card bg-primary text-white">
+        <div class="card-header">
+          <h4>Github User Search</h4>
+        </div>
+        <div class="card-body">
+          <form class="form-inline" (submit)="searchUser()">
+            <div class="input-group mb-3">
+              <input [(ngModel)]="githubUserQuery" name="user" type="search" class="form-control" id="exampleInputGithubUsername1" placeholder="Enter your GitHub username">
+              <button type="submit" class="btn btn-light">Search</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3" *ngIf="githubProfile">
+    <div class="col">
+      <div class="card bg-info text-white">
+        <div class="card-header mt-2">
+          <h4>Github Profile</h4>
+        </div>
+        <div class="card-body">
+          <app-github-profile [githubProfile]="githubProfile"></app-github-profile>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3" *ngIf="githubRepos.length > 0">
+    <div class="col">
+      <div class="card bg-success text-white position-relative">
+        <div class="card-header d-flex justify-content-between align-items-center mt-2">
+          <h4>Github Repositories</h4>
+          <div class="position-absolute top-0 end-0 mt-0 me-2">
+            <label for="pageSizeSelect" class="me-2">Repositories per page:</label>
+            <select id="pageSizeSelect" class="form-select form-select-sm" [(ngModel)]="pageSize" (change)="onPageSizeChange($event)">
+              <option *ngFor="let option of pageSizeOptions" [value]="option">{{ option }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="col" *ngFor="let repo of pagedRepos">
+              <div class="card h-100 bg-light">
+                <div class="card-body">
+                  <a [href]="repo.html_url" class="text-primary" target="_blank">
+                    <h6 class="card-title mb-0 fs-5">{{ repo.name }}</h6>
+                  </a>
+                  <p class="card-text text-wrap repo-description" style="color: #808080;">{{ repo.description }}</p> <!-- Apply inline style -->
+                  <a [href]="repo.languages_url" class="text-primary" target="_blank">
+                    <p class="mb-0">Languages used</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-3 d-flex justify-content-center">
+            <button class="btn btn-light me-2" [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)">Previous</button>
+            <span class="text-light">Page {{ currentPage }}</span>
+            <button class="btn btn-light ms-2" [disabled]="pagedRepos.length < pageSize" (click)="onPageChange(currentPage + 1)">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3" *ngIf="errorMessage">
+    <div class="col">
+      <div class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</div>
